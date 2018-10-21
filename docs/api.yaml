@@ -1,0 +1,94 @@
+openapi: 3.0.0
+info:
+  title: MobileGrub Location API
+  description: >-
+    Get food trucks near your location.
+  version: 1.0.0
+servers:
+  - url: "http://localhost:8080"
+    description: "Local development server"
+  - url: "https://nameless-ravine-66716.herokuapp.com"
+    description: "Staging server"
+paths:
+  /trucks:
+    get:
+      tags:
+        - FoodTrucks
+      summary: Get list of all food trucks.
+      responses:
+        "200":
+          description: An array with all food trucks.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FoodTrucks"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /trucks/{latitude}/{longitude}:
+    get:
+      tags:
+        - FoodTrucks
+      summary: Get list of food trucks near the provided coordinates.
+      parameters:
+        - name: latitude
+          in: path
+          required: true
+          description: Latitude
+          schema:
+            type: number
+        - name: longitude
+          in: path
+          required: true
+          description: Longitude
+          schema:
+            type: number
+      responses:
+        "200":
+          description: An array with all food trucks.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FoodTrucks"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    FoodTruck:
+      required:
+        - id
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        description:
+          type: string
+        latitude:
+          type: number
+          format: float
+        longitude:
+          type: number
+          format: float
+    FoodTrucks:
+      type: array
+      items:
+        $ref: "#/components/schemas/FoodTruck"
+    Error:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string

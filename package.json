@@ -1,0 +1,33 @@
+{
+  "name": "upload-api",
+  "version": "1.0.0",
+  "description": "Simple file upload service.",
+  "main": "src/app.js",
+  "license": "MIT",
+  "dependencies": {
+    "bunyan": "^1.8.12",
+    "dotenv": "^6.1.0",
+    "express": "^4.16.4",
+    "migrate": "^1.6.1",
+    "pg": "^7.5.0"
+  },
+  "devDependencies": {
+    "chakram": "^1.5.0",
+    "husky": "^1.1.2",
+    "mocha": "^5.2.0",
+    "prettier": "1.14.3",
+    "pretty-quick": "^1.8.0"
+  },
+  "scripts": {
+    "start": "node ./bin/server",
+    "lint": "prettier --write \"**/*.{js,json,md,yaml}\"",
+    "migrate": "migrate",
+    "load-sf-data": "node ./bin/load-sf-data",
+    "test": "mocha tests/"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  }
+}
